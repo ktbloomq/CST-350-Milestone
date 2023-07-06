@@ -16,8 +16,8 @@ namespace CST_350_Milestone.Services
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
 
-                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar, 50).Value = user.username;
-                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar, 50).Value = user.password;
+                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar, 50).Value = user.Username;
+                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar, 50).Value = user.Password;
 
                 try
                 {

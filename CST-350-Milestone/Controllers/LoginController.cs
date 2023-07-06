@@ -23,5 +23,10 @@ namespace CST_350_Milestone.Controllers
                 return View("LoginFailure", user);
             }
         }
+
+        public IActionResult RegisterUser() 
+        { 
+            return View(); 
+        }
     }
 }
