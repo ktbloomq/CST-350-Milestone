@@ -23,10 +23,22 @@ namespace CST_350_Milestone.Controllers
                 return View("LoginFailure", user);
             }
         }
-
-        public IActionResult RegisterUser() 
-        { 
-            return View(); 
+        public IActionResult RegisterUser()
+        {
+            return View("RegisterUser");
+        }
+        [HttpPost]
+        public IActionResult ProcessRegister(UserModel user) 
+        {
+            SecurityDAO securityDAO = new SecurityDAO();
+            if (securityDAO.RegisterUser(user))
+            {
+                return View("RegisterSuccess", user);
+            }
+            else
+            {
+                return View("RegisterFailure", user);
+            } 
         }
     }
 }

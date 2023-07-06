@@ -1,0 +1,11 @@
+﻿@model CST_350_Milestone.Models.UserModel
+
+<div>
+    <h4>Register Failure</h4>
+    <hr />
+    <p>@Model.FirstName @Model.LastName, something went wrong when you tried to registered, please try again.</p>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
