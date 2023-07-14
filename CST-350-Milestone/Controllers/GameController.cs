@@ -1,10 +1,11 @@
-﻿using CST_350_Milestone.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Minesweeper;
 
 namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
+		public GameBoard board = null;
 		public IActionResult Index(int difficulty, int size)
 		{
 			if (size == 0 && difficulty == 0)
@@ -12,13 +13,16 @@ namespace CST_350_Milestone.Controllers
 				size = 8;
 				difficulty = 1;
 			}
-			List<GameCellModel> cells = new List<GameCellModel>();
+			board = new GameBoard(size);
+			board.Difficulty = difficulty;
+			board.CalculateLiveNeighbors();
+			return View(board);
+		}
 
-			for (int i = 0; i < size * 10; i++)
-			{
-				cells.Add(new GameCellModel(i));
-			}
-			return View(cells);
+		public IActionResult HandleButton(int id)
+		{
+			//Console.WriteLine("Id: {0}\nRow: {1}\nCol: {2}", cells[id].ID, cells[id].Row, cells[id].Column);
+			return View("Index",board);
 		}
 	}
 }

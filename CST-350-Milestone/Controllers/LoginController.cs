@@ -11,17 +11,16 @@ namespace CST_350_Milestone.Controllers
             return View();
         }
 
-        public IActionResult ProcessLogin(UserModel user)
+        public void ProcessLogin(UserModel user)
         {
             SecurityDAO securityDAO = new SecurityDAO();
             if (securityDAO.FindUserByNameAndPassword(user))
             {
-                return View("LoginSuccess", user);
-            }
-            else
+                Response.Redirect("../game");
+            } else
             {
-                return View("LoginFailure", user);
-            }
+				Response.Redirect("./");
+			}
         }
         public IActionResult RegisterUser()
         {
