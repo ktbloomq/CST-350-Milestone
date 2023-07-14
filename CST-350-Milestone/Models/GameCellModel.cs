@@ -2,7 +2,7 @@
 {
 	public class GameCellModel
 	{
-		public int ID { get; set; }
+		public int Id { get; set; }
 		public int Row { get; set; }
 		public int Column { get; set; }
 		public bool IsVisited { get; set; }
@@ -10,16 +10,21 @@
 		public int LiveNeighbors { get; set; }
 		public bool IsFlagged { get; set; }
 
-		public GameCellModel(int id) 
-		{ 
-			if (id < 10)
+		public GameCellModel(int id, int boardSize) 
+		{
+			Id = id;
+			if (id < boardSize)
 			{
 				Row = 0; Column = id;
 			}
 			else
 			{
-				Row = id / 10; Column = id % 10;
+				Row = id / boardSize; Column = id % boardSize;
 			}
+			IsVisited = false;
+			LiveNeighbors = 0;
+			IsFlagged = false;
+			Live = false;
 		}
 
 	}

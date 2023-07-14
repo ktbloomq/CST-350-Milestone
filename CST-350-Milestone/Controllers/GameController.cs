@@ -5,20 +5,71 @@ namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
+		static List<GameGridModel> grids = new List<GameGridModel>();
+
 		public IActionResult Index(int difficulty, int size)
 		{
 			if (size == 0 && difficulty == 0)
 			{
 				size = 8;
-				difficulty = 1;
+				difficulty = 10;
 			}
-			List<GameCellModel> cells = new List<GameCellModel>();
-
-			for (int i = 0; i < size * 10; i++)
+			else
 			{
-				cells.Add(new GameCellModel(i));
+				difficulty = difficulty * 10; //Planning on having difficulty set at
+											  //levels one, two and three
 			}
-			return View(cells);
+
+			GameGridModel grid = new GameGridModel(size);
+			grid.Difficulty = difficulty;
+			grid.SetupLiveNeighbors();
+			grid.CalculateLiveNeighbors();
+			
+			grids.Add(grid);
+
+			return View("Index", grids);
+		}
+
+		public IActionResult HandleButtonClick(int gridID)
+		{
+			bool hitMine = false;
+			int row = 0;
+			int col = 0;
+			int size = grids.ElementAt(0).Size;
+			
+			if (gridID > size)
+			{
+				row = gridID / size;
+				col = gridID % size;
+			}
+			else
+			{
+				col = gridID % size;
+			}
+
+			GameGridModel grid = grids.ElementAt(0);
+			GameCellModel cell = grid.Grid[row, col];
+
+			grid.FloodFill(row, col);
+
+			if (cell.Live)
+			{
+				hitMine = true;
+				grid.RevealBombs();
+			}
+
+			cell.IsVisited = true;
+			grid.Grid[row, col] = cell;
+
+			if (grid.HaveWon())
+			{
+				return View("WonGame");
+			}
+
+			grids.Clear();
+			grids.Add(grid);
+
+			return View("Index", grids);
 		}
 	}
 }

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<CST_350_Milestone.Models.GameCellModel>
+﻿@model IEnumerable<CST_350_Milestone.Models.GameGridModel>
 
 <style>
-	.game-button { width: 50px; border: 2px black; margin: 3px }
+	.game-button { height: 50px; width: 50px; border: 2px black; margin: 3px }
 	.game-button-image { width: 45px; }
 	.button-zone { display: flex; flex-wrap: wrap; }
 	.line-break { flex-basis: 100%; height: 0; }
@@ -14,16 +14,37 @@
 
 <form>
 	<div class="button-zone">
-		@for (int i = 0; i < Model.Count(); i++)
+		@for(int row = 0; row < Model.ElementAt(0).Size; row++)
 		{
-			if (i % 10 == 0) {<div class="line-break"></div>}
+			for(int col = 0; col < Model.ElementAt(0).Size; col++)
+			{
+				//Create variable so as to not have to repeat Model.ElementAt(0).Grid[row, col] multiple times
+				var gridCell = Model.ElementAt(0).Grid[row, col];
+				<button class="game-button"  type="submit" 
+						value="@gridCell.Id"
+						name="gridID" asp-controller="Game" asp-action="HandleButtonClick">
 
-			<button class="game-button" type="submit", value="@Model.ElementAt(i).ID" name="buttonNumber"
-				asp-controller="Game" asp-action="">
-			@Model.ElementAt(i).Row
-			,
-			@Model.ElementAt(i).Column
-			</button>
+						
+						@if (gridCell.IsVisited)
+						{ // Show visited cells and amount of neighbors
+							if (gridCell.LiveNeighbors != 0 && gridCell.LiveNeighbors != 9)
+								@gridCell.LiveNeighbors
+						}
+						else
+						{
+							//If not visited, show unvisited square
+							<img class="game-button-image" src="~/img/unclicked.png"/>
+						}
+
+						@if (gridCell.Live && gridCell.IsVisited)
+						{ //Show Bombs if Clicked on
+							<img class="game-button-image" src="~/img/bomb.png"/>
+						}
+				</button>
+			}
+
+			<div class="line-break"></div>
+			
 		}
 	</div>
 </form>
