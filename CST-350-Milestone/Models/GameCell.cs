@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CST_350_Milestone.Models
+﻿namespace CST_350_Milestone.Models
 {
     public class GameCell
     {

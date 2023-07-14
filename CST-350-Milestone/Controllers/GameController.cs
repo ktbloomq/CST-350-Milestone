@@ -23,7 +23,7 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Play(int row, int col)
 		{
-			Console.WriteLine("Row: {0}\nCol: {1}", row, col);
+			// Console.WriteLine("Row: {0}\nCol: {1}", row, col);
 			board.Grid[row,col].Visted = true;
 			return View("Index", board);
 		}
