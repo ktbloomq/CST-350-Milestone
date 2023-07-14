@@ -18,12 +18,12 @@
 		{
 			for(int j=0; j<Model.Size; j++)
 			{
-				<button class="game-button" type="submit" name="buttonNumber"
+				<button class="game-button" type="submit" value="todo" name="buttonNumber"
 						asp-controller="Game" asp-action="">
 					@Model.Grid[i,j].Live
 				</button>
 			}
-			<br />
+			<div class="line-break"></div>
 		}
 	</div>
 </form>
