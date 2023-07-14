@@ -10,18 +10,18 @@
         public int LiveNeighbors { get; set; }
         public bool IsFlagged { get; set; }
 
-        public GameCellModel(int id)
-        {
-            ID = id;
-            if (id < 10)
-            {
-                Row = 0; Column = id;
-            }
-            else
-            {
-                Row = id / 10; Column = id % 10;
-            }
-        }
+		public GameCellModel(int id) 
+		{ 
+			ID = id;
+			if (id < 10)
+			{
+				Row = 0; Column = id;
+			}
+			else
+			{
+				Row = id / 10; Column = id % 10;
+			}
+		}
 
     }
 }
