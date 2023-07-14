@@ -5,7 +5,7 @@ namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
-		public GameBoard board = null;
+		public static GameBoard board = null;
 		public IActionResult Index(decimal difficulty, int size)
 		{
 			if (size == 0 && difficulty == 0)
@@ -20,13 +20,17 @@ namespace CST_350_Milestone.Controllers
 			return View(board);
 		}
 
-		public IActionResult HandleButton(int id)
+		public IActionResult Play(int row, int col)
 		{
-			Console.WriteLine("button click");
-			Console.WriteLine(id);
-			Console.WriteLine(board.Difficulty);
+			Console.WriteLine("Row: {0}\nCol: {1}", row, col);
+			return View("Index", board);
+		}
+
+		public IActionResult HandleButton(string id)
+		{
+			Console.WriteLine("id: {0}", id);
 			//Console.WriteLine("Id: {0}\nRow: {1}\nCol: {2}", cells[id].ID, cells[id].Row, cells[id].Column);
-			return View("index",board);
+			return View("Index",board);
 		}
 	}
 }
