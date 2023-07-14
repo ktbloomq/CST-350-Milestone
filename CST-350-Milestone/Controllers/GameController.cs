@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Minesweeper;
+﻿using CST_350_Milestone.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
 		public GameBoard board = null;
-		public IActionResult Index(int difficulty, int size)
+		public IActionResult Index(decimal difficulty, int size)
 		{
 			if (size == 0 && difficulty == 0)
 			{
 				size = 8;
-				difficulty = 1;
+				difficulty = 10;
 			}
 			board = new GameBoard(size);
 			board.Difficulty = difficulty;
-			board.CalculateLiveNeighbors();
+			board.SetupLiveNeighbors();
 			return View(board);
 		}
 
