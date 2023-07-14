@@ -12,6 +12,7 @@
 
 		public GameCellModel(int id) 
 		{ 
+			ID = id;
 			if (id < 10)
 			{
 				Row = 0; Column = id;
