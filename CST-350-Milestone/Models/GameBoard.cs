@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace Minesweeper
+namespace CST_350_Milestone.Models
 {
     public class GameBoard
     {

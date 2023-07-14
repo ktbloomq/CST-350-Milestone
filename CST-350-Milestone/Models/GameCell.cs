@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Minesweeper
+namespace CST_350_Milestone.Models
 {
     public class GameCell
     {
