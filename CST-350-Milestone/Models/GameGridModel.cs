@@ -6,7 +6,6 @@
 		public int Size { get; set; }
 		public GameCellModel[,] Grid { get; set; }
 		public decimal Difficulty { get; set; }
-		private int LiveCount { get; set; }
 
 		public GameGridModel() { }
 
@@ -31,7 +30,6 @@
 			//Determines the number of cells that be live based on difficulty
 			decimal livePercentage = Difficulty / 100.0m;
 			int liveCount = (int)(Grid.Length * livePercentage);
-			LiveCount = liveCount;
 
 			//Creates a list of GameCells in the grid
 			List<GameCellModel> cells = new List<GameCellModel>();
@@ -136,28 +134,23 @@
 		{
 			foreach (var cell in Grid)
 			{
-				cell.IsVisited = true;
+				if (cell.Live)
+					cell.IsVisited = true;
 			}
 		}
 
 		public bool HaveWon()
 		{
-			bool won = false;
-			int visitedCellCount = 0;
 
 			foreach (var cell in Grid)
 			{
-				if (!cell.Live && cell.IsVisited)
+				if (!cell.Live && !cell.IsVisited)
 				{
-					visitedCellCount++;
+					return false;
 				}
 			}
-			int totalCells = Size * Size;
-			int remainingCells = totalCells - LiveCount - visitedCellCount;
-			if (remainingCells == 0)
-				won = true;
 
-			return won;
+			return true;
 		}
 
 	}
