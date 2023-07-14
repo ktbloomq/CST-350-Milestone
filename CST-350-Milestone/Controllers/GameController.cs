@@ -16,13 +16,17 @@ namespace CST_350_Milestone.Controllers
 			board = new GameBoard(size);
 			board.Difficulty = difficulty;
 			board.SetupLiveNeighbors();
+			Console.WriteLine(board.Difficulty);
 			return View(board);
 		}
 
 		public IActionResult HandleButton(int id)
 		{
+			Console.WriteLine("button click");
+			Console.WriteLine(id);
+			Console.WriteLine(board.Difficulty);
 			//Console.WriteLine("Id: {0}\nRow: {1}\nCol: {2}", cells[id].ID, cells[id].Row, cells[id].Column);
-			return View("Index",board);
+			return View("index",board);
 		}
 	}
 }
