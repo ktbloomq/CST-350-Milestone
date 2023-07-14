@@ -16,6 +16,7 @@ namespace CST_350_Milestone.Controllers
 			board = new GameBoard(size);
 			board.Difficulty = difficulty;
 			board.SetupLiveNeighbors();
+			board.CalculateLiveNeighbors();
 			Console.WriteLine(board.Difficulty);
 			return View(board);
 		}
@@ -23,6 +24,7 @@ namespace CST_350_Milestone.Controllers
 		public IActionResult Play(int row, int col)
 		{
 			Console.WriteLine("Row: {0}\nCol: {1}", row, col);
+			board.Grid[row,col].Visted = true;
 			return View("Index", board);
 		}
 
