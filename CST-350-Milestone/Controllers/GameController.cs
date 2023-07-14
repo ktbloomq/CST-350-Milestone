@@ -27,12 +27,5 @@ namespace CST_350_Milestone.Controllers
 			board.Grid[row,col].Visted = true;
 			return View("Index", board);
 		}
-
-		public IActionResult HandleButton(string id)
-		{
-			Console.WriteLine("id: {0}", id);
-			//Console.WriteLine("Id: {0}\nRow: {1}\nCol: {2}", cells[id].ID, cells[id].Row, cells[id].Column);
-			return View("Index",board);
-		}
 	}
 }
