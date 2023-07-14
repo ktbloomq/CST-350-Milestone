@@ -1,33 +1,38 @@
-﻿namespace CST_350_Milestone.Models
-{
-	public class GameCell
-	{
-		public int Row { get; set; }
-		public int Column { get; set; }
-		public bool IsVisited { get; set; }
-		public bool Live { get; set; }
-		public int LiveNeighbors { get; set; }
-		public bool IsFlagged { get; set; }
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-        public GameCell(int row, int column, bool isVisted, bool live, int liveNeighbors, bool isFlagged)
+namespace Minesweeper
+{
+    public class GameCell
+    {
+        public int Row { get; set; }
+        public int Column { get; set; }
+        public bool Visted { get; set; }
+        public bool Live { get; set; }
+        public int LiveNeighbors { get; set; }
+        public bool Flag { get; set; }
+
+        public GameCell(int row, int column, bool visted, bool live, int liveNeighbors, bool flag)
         {
             Row = row;
             Column = column;
-            IsVisited = isVisted;
+            Visted = visted;
             Live = live;
             LiveNeighbors = liveNeighbors;
-            IsFlagged = isFlagged;
+            Flag = flag;
         }
 
         public GameCell()
         {
             Row = -1;
             Column = -1;
-            IsVisited = false;
+            Visted = false;
             Live = false;
             LiveNeighbors = 0;
-            IsFlagged = false;
+            Flag = false;
         }
-
     }
 }

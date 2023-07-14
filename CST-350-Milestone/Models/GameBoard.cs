@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CST_350_Milestone.Models
+namespace Minesweeper
 {
     public class GameBoard
     {
@@ -101,7 +101,7 @@ namespace CST_350_Milestone.Models
 
             GameCell cell = Grid[row, col];
 
-            if (cell.IsVisited)
+            if (cell.Visted)
             {
                 return; // Cell already visited
             }
@@ -111,7 +111,7 @@ namespace CST_350_Milestone.Models
                 return;  //Cell is live
             }
 
-            cell.IsVisited = true;
+            cell.Visted = true;
 
             if (cell.LiveNeighbors > 0)
             {
@@ -135,10 +135,7 @@ namespace CST_350_Milestone.Models
                 for (int col = 0; col < Grid.GetLength(1); col++)
                 {
                     Grid[row, col].Live = false;
-                    Grid[row, col].IsVisited = false;
-                    Grid[row, col].IsFlagged = false;
-                    Grid[row, col].LiveNeighbors = 0;
-
+                    Grid[row, col].Visted = false;
                 }
             }
         }
