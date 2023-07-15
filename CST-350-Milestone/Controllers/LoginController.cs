@@ -1,5 +1,6 @@
 ﻿using CST_350_Milestone.Models;
 using CST_350_Milestone.Services;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CST_350_Milestone.Controllers
@@ -11,17 +12,17 @@ namespace CST_350_Milestone.Controllers
             return View();
         }
 
-        public IActionResult ProcessLogin(UserModel user)
+        public void ProcessLogin(UserModel user)
         {
             SecurityDAO securityDAO = new SecurityDAO();
             if (securityDAO.FindUserByNameAndPassword(user))
             {
-                return View("LoginSuccess", user);
+                Response.Redirect("/Game");
             }
             else
             {
-                return View("LoginFailure", user);
-            }
+				Response.Redirect("./");
+			}
         }
         public IActionResult RegisterUser()
         {
