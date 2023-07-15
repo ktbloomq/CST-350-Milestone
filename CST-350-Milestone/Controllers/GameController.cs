@@ -56,15 +56,13 @@ namespace CST_350_Milestone.Controllers
 			{
 				hitMine = true;
 				grid.RevealBombs();
+			} else if (grid.HaveWon())
+			{
+				return View("WonGame");
 			}
 
 			cell.IsVisited = true;
 			grid.Grid[row, col] = cell;
-
-			if (grid.HaveWon())
-			{
-				return View("WonGame");
-			}
 
 			grids.Clear();
 			grids.Add(grid);
