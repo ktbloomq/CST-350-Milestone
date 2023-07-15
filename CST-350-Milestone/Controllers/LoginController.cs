@@ -1,6 +1,5 @@
 ﻿using CST_350_Milestone.Models;
 using CST_350_Milestone.Services;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CST_350_Milestone.Controllers

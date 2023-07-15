@@ -1,11 +1,12 @@
-﻿using CST_350_Milestone.Models;
+﻿using System.Drawing;
+using CST_350_Milestone.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
-		static List<GameGridModel> grids = new List<GameGridModel>();
+		static GameGridModel grid = null;
 
 		public IActionResult Index(int difficulty, int size)
 		{
@@ -20,14 +21,12 @@ namespace CST_350_Milestone.Controllers
 											  //levels one, two and three
 			}
 
-			GameGridModel grid = new GameGridModel(size);
+			grid = new(size);
 			grid.Difficulty = difficulty;
 			grid.SetupLiveNeighbors();
 			grid.CalculateLiveNeighbors();
-			
-			grids.Add(grid);
 
-			return View("Index", grids);
+			return View("Index", grid);
 		}
 
 		public IActionResult HandleButtonClick(int gridID)
@@ -35,9 +34,9 @@ namespace CST_350_Milestone.Controllers
 			bool hitMine = false;
 			int row = 0;
 			int col = 0;
-			int size = grids.ElementAt(0).Size;
+			int size = grid.Size;
 			
-			if (gridID > size)
+			if (gridID >= size)
 			{
 				row = gridID / size;
 				col = gridID % size;
@@ -46,8 +45,6 @@ namespace CST_350_Milestone.Controllers
 			{
 				col = gridID % size;
 			}
-
-			GameGridModel grid = grids.ElementAt(0);
 			GameCellModel cell = grid.Grid[row, col];
 
 			grid.FloodFill(row, col);
@@ -64,10 +61,7 @@ namespace CST_350_Milestone.Controllers
 			cell.IsVisited = true;
 			grid.Grid[row, col] = cell;
 
-			grids.Clear();
-			grids.Add(grid);
-
-			return View("Index", grids);
+			return View("Index", grid);
 		}
 	}
 }

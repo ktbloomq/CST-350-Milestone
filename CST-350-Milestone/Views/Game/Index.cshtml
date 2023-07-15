@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CST_350_Milestone.Models.GameGridModel>
+﻿@model CST_350_Milestone.Models.GameGridModel
 
 <style>
 	.game-button { height: 50px; width: 50px; border: 2px black; margin: 3px }
@@ -14,12 +14,12 @@
 
 <form>
 	<div class="button-zone">
-		@for(int row = 0; row < Model.ElementAt(0).Size; row++)
+		@for(int row = 0; row < Model.Size; row++)
 		{
-			for(int col = 0; col < Model.ElementAt(0).Size; col++)
+			for(int col = 0; col < Model.Size; col++)
 			{
 				//Create variable so as to not have to repeat Model.ElementAt(0).Grid[row, col] multiple times
-				var gridCell = Model.ElementAt(0).Grid[row, col];
+				var gridCell = Model.Grid[row, col];
 				<button class="game-button"  type="submit" 
 						value="@gridCell.Id"
 						name="gridID" asp-controller="Game" asp-action="HandleButtonClick">
