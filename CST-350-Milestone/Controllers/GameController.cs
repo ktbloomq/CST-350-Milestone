@@ -17,7 +17,6 @@ namespace CST_350_Milestone.Controllers
 			board.Difficulty = difficulty;
 			board.SetupLiveNeighbors();
 			board.CalculateLiveNeighbors();
-			Console.WriteLine(board.Difficulty);
 			return View(board);
 		}
 
@@ -25,7 +24,31 @@ namespace CST_350_Milestone.Controllers
 		{
 			// Console.WriteLine("Row: {0}\nCol: {1}", row, col);
 			board.FloodFill(row, col);
+			if (board.Grid[row, col].Live)
+			{
+				return View("lose");
+			}
+			if(IsGameWon())
+			{
+				return View("win");
+			}
 			return View("Index", board);
+		}
+
+		public bool IsGameWon()
+		{
+			for (int row = 0; row < board.Grid.GetLength(0); row++)
+			{
+				for (int col = 0; col < board.Grid.GetLength(1); col++)
+				{
+					GameCell cell = board.Grid[row, col];
+					if (!cell.Visted && !cell.Live)
+					{
+						return false; // There are still unvisited non-mine cells
+					}
+				}
+			}
+			return true;
 		}
 	}
 }
