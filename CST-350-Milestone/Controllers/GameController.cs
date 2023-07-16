@@ -31,7 +31,6 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult HandleButtonClick(int gridID)
 		{
-			bool hitMine = false;
 			int row = 0;
 			int col = 0;
 			int size = grid.Size;
@@ -51,9 +50,10 @@ namespace CST_350_Milestone.Controllers
 
 			if (cell.Live)
 			{
-				hitMine = true;
 				grid.RevealBombs();
-			} else if (grid.HaveWon())
+				return View("LostGame");
+			} 
+			else if (grid.HaveWon())
 			{
 				return View("WonGame");
 			}
@@ -63,5 +63,7 @@ namespace CST_350_Milestone.Controllers
 
 			return View("Index", grid);
 		}
+
+		
 	}
 }

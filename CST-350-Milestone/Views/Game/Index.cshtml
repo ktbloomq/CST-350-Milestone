@@ -1,16 +1,63 @@
 ﻿@model CST_350_Milestone.Models.GameGridModel
 
 <style>
-	.game-button { height: 50px; width: 50px; border: 2px black; margin: 3px }
-	.game-button-image { width: 45px; }
-	.button-zone { display: flex; flex-wrap: wrap; }
-	.line-break { flex-basis: 100%; height: 0; }
-	.button-label { font-size: 8px; text-align: center; }
-</style>
+	.game-button {
+		height: 50px;
+		width: 50px;
+		border: 2px groove black;
+		background-color: #9da7e5
+	}
 
-@{
-	string[] imageNames = { "unclicked.png", "clicked.png", "flag.png", "bomb.png" };
-}
+	.game-button-image {
+		width: 75%;
+		height: 75%;
+		border-radius: 3px;
+	}
+
+	.button-zone {
+		width: 90%;
+		background-color: #1b2985;
+		border-radius: 15px;
+		margin: auto;
+		padding: 10px;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-content: center;
+		gap: 2px;
+	}
+
+	.line-break {
+		flex-basis: 100%;
+		height: 0;
+	}
+
+	.button-label {
+		font-size: 8px;
+		text-align: center;
+	}
+
+	.neighbor-count {
+		font-family: Courier New, Courier, monospace;
+		font-size: larger;
+	}
+
+	.one-count {
+		color: forestgreen;
+	}
+
+	.two-count {
+		color: yellow;
+	}
+
+	.three-count {
+		color: darkorange;
+	}
+
+	.four-or-more {
+		color: red;
+	}
+</style>
 
 <form>
 	<div class="button-zone">
@@ -22,13 +69,32 @@
 				var gridCell = Model.Grid[row, col];
 				<button class="game-button"  type="submit" 
 						value="@gridCell.Id"
+						id="button"
 						name="gridID" asp-controller="Game" asp-action="HandleButtonClick">
 
 						
 						@if (gridCell.IsVisited)
 						{ // Show visited cells and amount of neighbors
 							if (gridCell.LiveNeighbors != 0 && gridCell.LiveNeighbors != 9)
-								@gridCell.LiveNeighbors
+							{
+								if (gridCell.LiveNeighbors == 1)
+								{
+								<span class="neighbor-count one-count"><b>@gridCell.LiveNeighbors</b></span>
+								}
+								else if (gridCell.LiveNeighbors == 2)
+								{
+								<span class="neighbor-count two-count"><b>@gridCell.LiveNeighbors</b></span>
+								}
+								else if (gridCell.LiveNeighbors == 3)
+								{
+								<span class="neighbor-count three-count"><b>@gridCell.LiveNeighbors</b></span>
+								}
+								else
+								{
+								<span class="neighbor-count four-or-more"><b>@gridCell.LiveNeighbors</b></span>
+								}
+							}
+						
 						}
 						else
 						{
