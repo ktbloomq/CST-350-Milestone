@@ -2,3 +2,40 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$(function () {
+    $(document).bind("contextmenu", function (e) {
+        e.preventDefault();
+    });
+    $(document).on("mousedown", ".game-button", function (event) {
+        event.preventDefault();
+        let buttonNumber = $(this).val();
+        switch (event.which) {
+            case 1:
+                console.log("left");
+                doButtonUpdate(buttonNumber, "/Game/ShowOneButton");
+                break;
+            case 3:
+                console.log("right");
+                doButtonUpdate(buttonNumber, "/Game/RightClickShowOneButton");
+                break;
+            default:
+                console.log("nothing");
+
+        }
+    });
+});
+
+function doButtonUpdate(buttonNumber, urlString) {
+    $.ajax({
+        datatype: "json",
+        method: "POST",
+        url: urlString,
+        data: {
+            "buttonNumber": buttonNumber
+        },
+        success: function (data) {
+            console.log(data);
+            $("#" + buttonNumber).html(data);
+        }
+    });
+}

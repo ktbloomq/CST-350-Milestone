@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using CST_350_Milestone.Models;
+﻿using CST_350_Milestone.Models;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace CST_350_Milestone.Controllers
 {
@@ -64,6 +64,14 @@ namespace CST_350_Milestone.Controllers
 			return View("Index", grid);
 		}
 
-		
+		public IActionResult ShowOneButton(int buttonNumber)
+		{
+			//Console.WriteLine("row = {0}\ncol = {1}", buttonNumber / grid.Size, buttonNumber % grid.Size);
+
+			GameCellModel cell = grid.Grid[buttonNumber/grid.Size, buttonNumber % grid.Size];
+			cell.IsVisited = true;
+
+			return PartialView(cell);
+		}
 	}
 }
