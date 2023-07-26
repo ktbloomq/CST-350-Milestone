@@ -11,20 +11,20 @@ $(function () {
         let buttonNumber = $(this).val();
         switch (event.which) {
             case 1:
-                console.log("left");
+                // console.log("left");
                 doButtonUpdate(buttonNumber, "/Game/ShowOneButton");
                 break;
             case 3:
-                console.log("right");
+                // console.log("right");
                 doButtonUpdate(buttonNumber, "/Game/Flag");
                 break;
             default:
-                console.log("nothing");
+                // console.log("nothing");
 
         }
     });
 });
-
+let test;
 function doButtonUpdate(buttonNumber, urlString) {
     $.ajax({
         datatype: "json",
@@ -35,7 +35,14 @@ function doButtonUpdate(buttonNumber, urlString) {
         },
         success: function (data) {
             //console.log(data);
-            $("#" + buttonNumber).html(data);
+            test = data;
+            if (data.status === "lose") {
+                window.location.href = "/Game/Lose";
+            } else if (data.status === "win") {
+                window.location.href = "/Game/Win";
+            } else {
+                $("#" + buttonNumber).html(data);
+            }
         }
     });
 }

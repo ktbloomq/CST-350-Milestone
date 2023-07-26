@@ -91,12 +91,12 @@ namespace CST_350_Milestone.Controllers
 			{
 				// Console.WriteLine("lost");
 				grid.RevealBombs();
-				Response.Redirect("Game/Lose");
+				return Json(new { status = "lose" });
 			}
 			else if (grid.HaveWon())
 			{
 				// Console.WriteLine("won!");
-				Response.Redirect("Game/Win");
+				return Json(new { status = "win" });
 			}
 
 
