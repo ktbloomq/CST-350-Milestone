@@ -16,7 +16,7 @@ $(function () {
                 break;
             case 3:
                 console.log("right");
-                doButtonUpdate(buttonNumber, "/Game/RightClickShowOneButton");
+                doButtonUpdate(buttonNumber, "/Game/Flag");
                 break;
             default:
                 console.log("nothing");

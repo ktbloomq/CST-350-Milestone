@@ -66,12 +66,19 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult ShowOneButton(int buttonNumber)
 		{
-			//Console.WriteLine("row = {0}\ncol = {1}", buttonNumber / grid.Size, buttonNumber % grid.Size);
-
+			// convert id into row col pair
 			GameCellModel cell = grid.Grid[buttonNumber/grid.Size, buttonNumber % grid.Size];
 			cell.IsVisited = true;
 
 			return PartialView(cell);
+		}
+
+		public IActionResult Flag(int buttonNumber)
+		{
+			GameCellModel cell = grid.Grid[buttonNumber / grid.Size, buttonNumber % grid.Size];
+			cell.IsFlagged = !cell.IsFlagged;
+
+			return PartialView("ShowOneButton", cell);
 		}
 	}
 }
