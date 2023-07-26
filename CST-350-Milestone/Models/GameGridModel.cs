@@ -89,6 +89,11 @@
 			}
 		}
 
+		public void reveal(int row, int col)
+		{
+			Grid[row, col].IsVisited = true;
+		}
+
 		public void FloodFill(int row, int col)
 		{
 
@@ -135,7 +140,10 @@
 			foreach (var cell in Grid)
 			{
 				if (cell.Live)
+				{
 					cell.IsVisited = true;
+					cell.IsFlagged = false;
+				}
 			}
 		}
 
@@ -146,6 +154,7 @@
 			{
 				if (!cell.Live && !cell.IsVisited)
 				{
+					// Console.WriteLine("space {0} {1} has not been visited", cell.Row, cell.Column);
 					return false;
 				}
 			}

@@ -34,7 +34,7 @@ function doButtonUpdate(buttonNumber, urlString) {
             "buttonNumber": buttonNumber
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             $("#" + buttonNumber).html(data);
         }
     });

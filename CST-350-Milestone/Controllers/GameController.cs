@@ -29,6 +29,16 @@ namespace CST_350_Milestone.Controllers
 			return View("Index", grid);
 		}
 
+		public IActionResult Win()
+		{
+			return View("WonGame");
+		}
+
+		public IActionResult Lose()
+		{
+			return View("Index", grid);
+		}
+
 		public IActionResult HandleButtonClick(int gridID)
 		{
 			int row = 0;
@@ -67,8 +77,28 @@ namespace CST_350_Milestone.Controllers
 		public IActionResult ShowOneButton(int buttonNumber)
 		{
 			// convert id into row col pair
-			GameCellModel cell = grid.Grid[buttonNumber/grid.Size, buttonNumber % grid.Size];
+			int row = buttonNumber / grid.Size;
+			int col = buttonNumber % grid.Size;
+			// Console.WriteLine(row + " " + col);
+			grid.reveal(row, col);
+			GameCellModel cell = grid.Grid[row, col];
 			cell.IsVisited = true;
+
+
+
+			// win/loss detection
+			if (cell.Live)
+			{
+				// Console.WriteLine("lost");
+				grid.RevealBombs();
+				Response.Redirect("Game/Lose");
+			}
+			else if (grid.HaveWon())
+			{
+				// Console.WriteLine("won!");
+				Response.Redirect("Game/Win");
+			}
+
 
 			return PartialView(cell);
 		}
