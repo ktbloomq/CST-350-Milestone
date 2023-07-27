@@ -24,7 +24,7 @@ $(function () {
         }
     });
 });
-let test;
+//let test;
 function getUpdatedCells(buttonNumber) {
     $.ajax({
         datatype: 'json',
@@ -34,7 +34,10 @@ function getUpdatedCells(buttonNumber) {
             'buttonNumber': buttonNumber
         },
         success: function (data) {
-            test = data;
+            //test = data;
+            for (let i = 0; i < data.length; i++) {
+                doButtonUpdate(data[i], "/Game/ShowOneButton");
+            }
         }
     });
 }

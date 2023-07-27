@@ -72,6 +72,18 @@ namespace CST_350_Milestone.Controllers
 		}
 		*/
 
+		public IActionResult Reveal()
+		{
+			List<int> ids = new List<int>();
+
+			//placeholder
+			ids.Add(0);
+			ids.Add(1);
+			ids.Add(2);
+
+			return Json(ids);
+		}
+
 		public IActionResult ShowOneButton(int buttonNumber)
 		{
 			GameCellModel cell = game.update(buttonNumber);
