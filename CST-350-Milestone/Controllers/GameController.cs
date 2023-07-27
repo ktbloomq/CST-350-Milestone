@@ -68,9 +68,6 @@ namespace CST_350_Milestone.Controllers
 				return View("WonGame");
 			}
 
-			cell.IsVisited = true;
-			grid.Grid[row, col] = cell;
-
 			return View("Index", grid);
 		}
 
