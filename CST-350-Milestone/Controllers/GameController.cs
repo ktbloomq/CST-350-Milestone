@@ -1,4 +1,5 @@
 ﻿using CST_350_Milestone.Models;
+using CST_350_Milestone.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -6,7 +7,8 @@ namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
-		static GameGridModel grid = null;
+		//static GameGridModel grid = null;
+		static GameService game = null;
 
 		public IActionResult Index(int difficulty, int size)
 		{
@@ -21,12 +23,9 @@ namespace CST_350_Milestone.Controllers
 											  //levels one, two and three
 			}
 
-			grid = new(size);
-			grid.Difficulty = difficulty;
-			grid.SetupLiveNeighbors();
-			grid.CalculateLiveNeighbors();
+			game = new(size, difficulty);
 
-			return View("Index", grid);
+			return View("Index", game.grid);
 		}
 
 		public IActionResult Win()
@@ -36,9 +35,10 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Lose()
 		{
-			return View("Index", grid);
+			return View("Index", game.grid);
 		}
 
+		/*
 		public IActionResult HandleButtonClick(int gridID)
 		{
 			int row = 0;
@@ -70,29 +70,24 @@ namespace CST_350_Milestone.Controllers
 
 			return View("Index", grid);
 		}
+		*/
 
 		public IActionResult ShowOneButton(int buttonNumber)
 		{
-			// convert id into row col pair
-			int row = buttonNumber / grid.Size;
-			int col = buttonNumber % grid.Size;
-			// Console.WriteLine(row + " " + col);
-			grid.reveal(row, col);
-			GameCellModel cell = grid.Grid[row, col];
-			cell.IsVisited = true;
+			GameCellModel cell = game.update(buttonNumber);
 
 
 
 			// win/loss detection
-			if (cell.Live)
+			if (game.lost)
 			{
 				// Console.WriteLine("lost");
-				grid.RevealBombs();
+				game.RevealBombs();
 				return Json(new { status = "lose" });
 			}
-			else if (grid.HaveWon())
+			else if (game.won)
 			{
-				// Console.WriteLine("won!");
+				Console.WriteLine("Controller won!");
 				return Json(new { status = "win" });
 			}
 
@@ -102,8 +97,7 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Flag(int buttonNumber)
 		{
-			GameCellModel cell = grid.Grid[buttonNumber / grid.Size, buttonNumber % grid.Size];
-			cell.IsFlagged = !cell.IsFlagged;
+			GameCellModel cell = game.flag(buttonNumber);
 
 			return PartialView("ShowOneButton", cell);
 		}

@@ -25,6 +25,19 @@ $(function () {
     });
 });
 let test;
+function getUpdatedCells(buttonNumber) {
+    $.ajax({
+        datatype: 'json',
+        method: 'POST',
+        url: '/Game/Reveal',
+        data: {
+            'buttonNumber': buttonNumber
+        },
+        success: function (data) {
+            test = data;
+        }
+    });
+}
 function doButtonUpdate(buttonNumber, urlString) {
     $.ajax({
         datatype: "json",
@@ -35,7 +48,6 @@ function doButtonUpdate(buttonNumber, urlString) {
         },
         success: function (data) {
             //console.log(data);
-            test = data;
             if (data.status === "lose") {
                 window.location.href = "/Game/Lose";
             } else if (data.status === "win") {
