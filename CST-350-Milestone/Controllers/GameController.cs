@@ -74,6 +74,7 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Reveal(int buttonNumber)
 		{
+			game.grid.ClearFloodFillList();
 			int row = 0;
 			if (buttonNumber >= game.grid.Size)
 			{
@@ -82,8 +83,6 @@ namespace CST_350_Milestone.Controllers
 			int col = buttonNumber % game.grid.Size;
 
 			List<int> ids = game.grid.FloodFill(row, col);
-			game.grid.ClearFloodFillList();
-
 			return Json(ids);
 		}
 
