@@ -12,7 +12,7 @@ $(function () {
         switch (event.which) {
             case 1:
                 // console.log("left");
-                doButtonUpdate(buttonNumber, "/Game/ShowOneButton");
+                getUpdatedCells(buttonNumber);
                 break;
             case 3:
                 // console.log("right");

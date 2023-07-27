@@ -7,6 +7,8 @@
 		public GameCellModel[,] Grid { get; set; }
 		public decimal Difficulty { get; set; }
 
+		private List<int> FloodFillList = new List<int>();
+
 		public GameGridModel() { }
 
 		public GameGridModel(int size)
@@ -94,13 +96,13 @@
 			Grid[row, col].IsVisited = true;
 		}
 
-		public void FloodFill(int row, int col)
+		public List<int> FloodFill(int row, int col)
 		{
 
 
 			if (row < 0 || row >= Grid.GetLength(0) || col < 0 || col >= Grid.GetLength(1))
 			{
-				return; // Invalid cell
+				return FloodFillList; // Invalid cell
 			}
 
 			GameCellModel cell = Grid[row, col];
@@ -108,20 +110,21 @@
 
 			if (cell.IsVisited)
 			{
-				return; // Cell already visited
+				return FloodFillList; // Cell already visited
 			}
 
 
 			if (cell.Live == true)
 			{
-				return;  //Cell is live
+				return FloodFillList;  //Cell is live
 			}
 
 			cell.IsVisited = true;
+			FloodFillList.Add(cell.Id);
 
 			if (cell.LiveNeighbors > 0)
 			{
-				return;
+				return FloodFillList;
 			}
 
 			// Recursively call floodFill on surrounding cells
@@ -133,6 +136,13 @@
 			FloodFill(row + 1, col - 1); // NE
 			FloodFill(row - 1, col + 1); // SW
 			FloodFill(row - 1, col - 1); // NW
+
+			return FloodFillList;
+		}
+
+		public void ClearFloodFillList()
+		{
+			FloodFillList.Clear();
 		}
 
 		public void RevealBombs()
