@@ -72,15 +72,17 @@ namespace CST_350_Milestone.Controllers
 		}
 		*/
 
-		public IActionResult Reveal()
+		public IActionResult Reveal(int buttonNumber)
 		{
-			List<int> ids = new List<int>();
+			game.grid.ClearFloodFillList();
+			int row = 0;
+			if (buttonNumber >= game.grid.Size)
+			{
+				row = buttonNumber / game.grid.Size;
+			}
+			int col = buttonNumber % game.grid.Size;
 
-			//placeholder
-			ids.Add(0);
-			ids.Add(1);
-			ids.Add(2);
-
+			List<int> ids = game.grid.FloodFill(row, col);
 			return Json(ids);
 		}
 
