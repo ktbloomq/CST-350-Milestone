@@ -39,48 +39,10 @@ namespace CST_350_Milestone.Controllers
 			return View("Index", game.grid);
 		}
 
-		/*
-		public IActionResult HandleButtonClick(int gridID)
-		{
-			int row = 0;
-			int col = 0;
-			int size = grid.Size;
-			
-			if (gridID >= size)
-			{
-				row = gridID / size;
-				col = gridID % size;
-			}
-			else
-			{
-				col = gridID % size;
-			}
-			GameCellModel cell = grid.Grid[row, col];
-
-			grid.FloodFill(row, col);
-
-			if (cell.Live)
-			{
-				grid.RevealBombs();
-				return View("LostGame");
-			} 
-			else if (grid.HaveWon())
-			{
-				return View("WonGame");
-			}
-
-			return View("Index", grid);
-		}
-		*/
-
 		public IActionResult Reveal(int buttonNumber)
 		{
 			game.grid.ClearFloodFillList();
-			int row = 0;
-			if (buttonNumber >= game.grid.Size)
-			{
-				row = buttonNumber / game.grid.Size;
-			}
+			int row = buttonNumber / game.grid.Size;
 			int col = buttonNumber % game.grid.Size;
 
 			List<int> ids = game.grid.FloodFill(row, col);
