@@ -35,6 +35,7 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Lose()
 		{
+			game.RevealBombs();
 			return View("Index", game.grid);
 		}
 
@@ -83,6 +84,10 @@ namespace CST_350_Milestone.Controllers
 			int col = buttonNumber % game.grid.Size;
 
 			List<int> ids = game.grid.FloodFill(row, col);
+			if(ids.Count == 0)
+			{
+				return Json(new { status = "lose" });
+			}
 			return Json(ids);
 		}
 
@@ -96,7 +101,6 @@ namespace CST_350_Milestone.Controllers
 			if (game.lost)
 			{
 				// Console.WriteLine("lost");
-				game.RevealBombs();
 				return Json(new { status = "lose" });
 			}
 			else if (game.won)

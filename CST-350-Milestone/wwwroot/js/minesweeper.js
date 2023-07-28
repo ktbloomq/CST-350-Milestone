@@ -7,11 +7,11 @@ $(function () {
         e.preventDefault();
     });
     $(document).on("mousedown", ".game-button", function (event) {
-        event.preventDefault();
+        //event.preventDefault();
         let buttonNumber = $(this).val();
         switch (event.which) {
             case 1:
-                // console.log("left");
+                //console.log(buttonNumber);
                 getUpdatedCells(buttonNumber);
                 break;
             case 3:
@@ -35,6 +35,9 @@ function getUpdatedCells(buttonNumber) {
         },
         success: function (data) {
             //test = data;
+            if (data.status === "lose") {
+                window.location.href = "/Game/Lose";
+            }
             for (let i = 0; i < data.length; i++) {
                 doButtonUpdate(data[i], "/Game/ShowOneButton");
             }
