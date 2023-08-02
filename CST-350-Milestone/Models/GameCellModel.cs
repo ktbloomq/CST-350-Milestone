@@ -27,5 +27,7 @@
 			Live = false;
 		}
 
+		public GameCellModel() { }
+
 	}
 }
