@@ -8,27 +8,27 @@ namespace CST_350_Milestone.Services
 		string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=milestone-cst-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		// incomplete
-		public bool getOne(int id)
+		public string getOne(int id)
 		{
 			Console.WriteLine("DAO: " + id);
-			bool success = false;
+			string gameState = null;
 
-			string sqlStatement = "SELECT * FROM dbo.saves";
+			string sqlStatement = "SELECT game FROM dbo.saves where id = @id";
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				SqlCommand command = new SqlCommand(sqlStatement, connection);
 
-				//command.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+				command.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
 
 				try
 				{
 					connection.Open();
 					SqlDataReader reader = command.ExecuteReader();
-					if (reader.HasRows)
+					if (reader.Read())
 					{
-						Console.WriteLine("has rows");
-						Console.WriteLine(reader.GetValue(0));
-						success = true;
+						// Console.WriteLine("has rows");
+						gameState = (string)reader[0];
+						Console.WriteLine(gameState);
 					}
 				}
 				catch (Exception ex)
@@ -36,7 +36,7 @@ namespace CST_350_Milestone.Services
 					Console.WriteLine(ex.Message);
 				}
 			}
-			return success;
+			return gameState;
 		}
 		public bool save(int userId, string gameState)
 		{
