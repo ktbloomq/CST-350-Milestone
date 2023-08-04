@@ -8,11 +8,14 @@ namespace CST_350_Milestone.Services
 	{
 		string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=milestone-cst-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-		public List<object> getAll()
+		// incomplete
+
+		public List<SavesDTO> GetAll()
 		{
+			List<SavesDTO> savedGames = new List<SavesDTO>();
+
 			string sqlStatement = "SELECT * FROM dbo.saves";
-			List<object> objects = new List<object>();
-			using (SqlConnection connection = new SqlConnection(connectionString))
+			using (SqlConnection connection = new SqlConnection(connectionString)) 
 			{
 				SqlCommand command = new SqlCommand(sqlStatement, connection);
 
@@ -22,40 +25,37 @@ namespace CST_350_Milestone.Services
 					SqlDataReader reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						IDictionary<string, object> record = new Dictionary<string, object>();
-						for (int i = 0; i < reader.FieldCount; i++)
-						{
-							record.Add(reader.GetName(i), reader[i]);
-						}
-						objects.Add(record);
+						savedGames.Add(new SavesDTO((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]));
 					}
 				}
 				catch (Exception ex)
 				{
 					Console.WriteLine(ex.Message);
-				}
+				};
 			}
-			return objects;
+			return savedGames;
 		}
-		public string getOne(int id)
-		{
-			string gameState = null;
 
-			string sqlStatement = "SELECT game FROM dbo.saves where id = @id";
+		public SavesDTO getOne(int id)
+		{
+			Console.WriteLine("DAO: " + id);
+			SavesDTO gameState = null;
+
+			string sqlStatement = "SELECT * FROM dbo.saves where id = @id";
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				SqlCommand command = new SqlCommand(sqlStatement, connection);
 
-				command.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+				command.Parameters.AddWithValue("@id", id);
 
 				try
 				{
 					connection.Open();
 					SqlDataReader reader = command.ExecuteReader();
-					if (reader.Read())
+					while (reader.Read())
 					{
 						// Console.WriteLine("has rows");
-						gameState = (string)reader[0];
+						gameState = new SavesDTO((int)reader[0], (int)reader[1], (string)reader[2], (DateTime)reader[3]);
 						Console.WriteLine(gameState);
 					}
 				}
@@ -91,5 +91,31 @@ namespace CST_350_Milestone.Services
 			}
 			return success;
 		}
+
+		public bool DeleteOne(int id)
+		{
+            string sqlStatement = "DELETE FROM dbo.saves WHERE id = @id";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+
+                
+				command.Parameters.AddWithValue("@id", id);
+
+                try
+                {
+                    connection.Open();
+                    
+					command.ExecuteNonQuery();
+                    
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+					return false;
+                }
+            }
+			return true;
+        } 
 	}
 }
