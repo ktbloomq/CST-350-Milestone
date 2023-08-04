@@ -9,6 +9,7 @@ namespace CST_350_Milestone.Controllers
 	{
 		//static GameGridModel grid = null;
 		static GameService game = null;
+		static SavesDAO savesDAO = new SavesDAO();
 
 		public IActionResult Index(int difficulty, int size)
 		{
@@ -81,10 +82,9 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Save()
 		{
-			SavesDAO saves = new SavesDAO();
 			string json = JsonConvert.SerializeObject(game.grid);
 			Console.WriteLine(json);
-			saves.save(1, json);
+			savesDAO.save(1, json);
 			return View("Index", game.grid);
 		}
 
@@ -92,9 +92,8 @@ namespace CST_350_Milestone.Controllers
 		[Route("/Game/Load/{save:int}")]
 		public IActionResult Load(int save)
 		{
-			SavesDAO saves = new SavesDAO();
 			Console.WriteLine("loading save " + save);
-			string gameState = saves.getOne(save);
+			string gameState = savesDAO.getOne(save);
 			game = new GameService(gameState);
 			return View("Index", game.grid);
 		}

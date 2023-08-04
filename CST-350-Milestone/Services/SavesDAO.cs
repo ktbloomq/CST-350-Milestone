@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using CST_350_Milestone.Models;
+using Newtonsoft.Json;
 
 namespace CST_350_Milestone.Services
 {
@@ -7,10 +8,37 @@ namespace CST_350_Milestone.Services
 	{
 		string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=milestone-cst-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-		// incomplete
+		public List<object> getAll()
+		{
+			string sqlStatement = "SELECT * FROM dbo.saves";
+			List<object> objects = new List<object>();
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				SqlCommand command = new SqlCommand(sqlStatement, connection);
+
+				try
+				{
+					connection.Open();
+					SqlDataReader reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						IDictionary<string, object> record = new Dictionary<string, object>();
+						for (int i = 0; i < reader.FieldCount; i++)
+						{
+							record.Add(reader.GetName(i), reader[i]);
+						}
+						objects.Add(record);
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+				}
+			}
+			return objects;
+		}
 		public string getOne(int id)
 		{
-			Console.WriteLine("DAO: " + id);
 			string gameState = null;
 
 			string sqlStatement = "SELECT game FROM dbo.saves where id = @id";
