@@ -73,39 +73,41 @@
 						name="gridID">
 
 						
-						@if (gridCell.IsVisited)
-						{ // Show visited cells and amount of neighbors
-							if (gridCell.LiveNeighbors != 0 && gridCell.LiveNeighbors != 9)
-							{
-								if (gridCell.LiveNeighbors == 1)
-								{
-								<span class="neighbor-count one-count"><b>@gridCell.LiveNeighbors</b></span>
-								}
-								else if (gridCell.LiveNeighbors == 2)
-								{
-								<span class="neighbor-count two-count"><b>@gridCell.LiveNeighbors</b></span>
-								}
-								else if (gridCell.LiveNeighbors == 3)
-								{
-								<span class="neighbor-count three-count"><b>@gridCell.LiveNeighbors</b></span>
-								}
-								else
-								{
-								<span class="neighbor-count four-or-more"><b>@gridCell.LiveNeighbors</b></span>
-								}
-							}
-						
-						}
-						else
+					@if (gridCell.IsVisited)
+					{ // Show visited cells and amount of neighbors
+						if (gridCell.LiveNeighbors != 0 && gridCell.LiveNeighbors != 9)
 						{
-							//If not visited, show unvisited square
-							<img class="game-button-image" src="~/img/unclicked.png"/>
+							if (gridCell.LiveNeighbors == 1)
+							{
+								<span class="neighbor-count one-count"><b>@gridCell.LiveNeighbors</b></span>
+							}
+							else if (gridCell.LiveNeighbors == 2)
+							{
+								<span class="neighbor-count two-count"><b>@gridCell.LiveNeighbors</b></span>
+							}
+							else if (gridCell.LiveNeighbors == 3)
+							{
+								<span class="neighbor-count three-count"><b>@gridCell.LiveNeighbors</b></span>
+							}
+							else
+							{
+								<span class="neighbor-count four-or-more"><b>@gridCell.LiveNeighbors</b></span>
+							}
 						}
-
-						@if (gridCell.Live && gridCell.IsVisited)
+						if (gridCell.Live)
 						{ //Show Bombs if Clicked on
-							<img class="game-button-image" src="~/img/bomb.png"/>
+							<img class="game-button-image" src="~/img/bomb.png" />
 						}
+					}
+					else if(gridCell.IsFlagged)
+					{
+						<img class="game-button-image" src="~/img/flag.png" />
+					}
+					else
+					{
+						//If not visited, show unvisited square
+						<img class="game-button-image" src="~/img/unclicked.png"/>
+					}						
 				</button>
 			</div>
 		}
