@@ -94,8 +94,8 @@ namespace CST_350_Milestone.Controllers
 		{
 			SavesDAO saves = new SavesDAO();
 			Console.WriteLine("loading save " + save);
-			string gameState = saves.getOne(save);
-			game = new GameService(gameState);
+			SavesDTO gameState = saves.getOne(save);
+			game = new GameService(gameState.SaveState);
 			return View("Index", game.grid);
 		}
 	}
