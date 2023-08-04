@@ -88,11 +88,13 @@ namespace CST_350_Milestone.Controllers
 			return View("Index", game.grid);
 		}
 
+		[HttpGet]
+		[Route("/Game/Load/{save:int}")]
 		public IActionResult Load(int save)
 		{
 			SavesDAO saves = new SavesDAO();
 			Console.WriteLine("loading save " + save);
-			string gameState = saves.getOne(2);
+			string gameState = saves.getOne(save);
 			game = new GameService(gameState);
 			return View("Index", game.grid);
 		}
