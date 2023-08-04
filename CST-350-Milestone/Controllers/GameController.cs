@@ -11,19 +11,13 @@ namespace CST_350_Milestone.Controllers
 		static GameService game = null;
 		static SavesDAO savesDAO = new SavesDAO();
 
-		public IActionResult Index(int difficulty, int size)
+		public IActionResult Index()
 		{
-			if (size == 0 && difficulty == 0)
-			{
-				size = 8;
-				difficulty = 10;
-			}
-			else
-			{
-				difficulty = difficulty * 10; //Planning on having difficulty set at
-											  //levels one, two and three
-			}
+			return View("setup");
+		}
 
+		public IActionResult Start(int difficulty, int size)
+		{
 			game = new(size, difficulty);
 
 			return View("Index", game.grid);
