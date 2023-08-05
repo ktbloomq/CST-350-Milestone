@@ -69,7 +69,8 @@ namespace CST_350_Milestone.Services
 		public bool save(int userId, string gameState)
 		{
 			bool success = false;
-			string sqlStatement = "INSERT INTO dbo.saves (userId, game) Values(@0, @1)";
+			DateTime dateTime = DateTime.Now;
+			string sqlStatement = "INSERT INTO dbo.saves (userId, game, date_saved) Values(@0, @1, @2)";
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -78,7 +79,8 @@ namespace CST_350_Milestone.Services
 					SqlCommand command = new SqlCommand(sqlStatement, connection);
 					command.Parameters.Add("@0", System.Data.SqlDbType.Int).Value = userId;
 					command.Parameters.Add("@1", System.Data.SqlDbType.NVarChar).Value = gameState;
-					connection.Open();
+					command.Parameters.Add("@2", System.Data.SqlDbType.DateTime).Value = dateTime;
+                    connection.Open();
 					command.ExecuteNonQuery();
 					connection.Close();
 
