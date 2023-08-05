@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CST_350_Milestone.Models.SavesDTO>
+
+<p>
+    <a asp-action="Create">Saved Games List</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SaveID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaveDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameDifficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameSize)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+                <td>
+                @Html.DisplayFor(modelItem => item.SaveID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaveDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameDifficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameSize)
+            </td>
+            <td>
+                <input type="button" value="Load" class="btn btn-primary" onclick="window.location.href='/game/load/@item.SaveID'"/> |
+                <input type="button" value="Delete" class="btn btn-danger" onclick="window.location.href='/game/delete/@item.SaveID'" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

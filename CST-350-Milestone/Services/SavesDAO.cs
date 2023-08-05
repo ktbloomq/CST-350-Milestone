@@ -42,7 +42,8 @@ namespace CST_350_Milestone.Services
 			SavesDTO gameState = null;
 
 			string sqlStatement = "SELECT * FROM dbo.saves where id = @id";
-			using (SqlConnection connection = new SqlConnection(connectionString))
+			using (
+				SqlConnection connection = new SqlConnection(connectionString))
 			{
 				SqlCommand command = new SqlCommand(sqlStatement, connection);
 
@@ -59,7 +60,7 @@ namespace CST_350_Milestone.Services
 						Console.WriteLine(gameState);
 					}
 				}
-				catch (Exception ex)
+				catch (SqlException ex)
 				{
 					Console.WriteLine(ex.Message);
 				}

@@ -91,5 +91,18 @@ namespace CST_350_Milestone.Controllers
 			game = new GameService(gameState.SaveState);
 			return View("Index", game.grid);
 		}
+
+		public IActionResult LoadGames()
+		{
+			return View("LoadGames", savesDAO.GetAll());
+		}
+
+		[HttpGet]
+		[Route("/game/delete/{save:int}")]
+		public IActionResult Delete(int save)
+		{
+			savesDAO.DeleteOne(save);
+			return View("LoadGames", savesDAO.GetAll());
+		}
 	}
 }
