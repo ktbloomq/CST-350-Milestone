@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using CST_350_Milestone.Models;
+using Newtonsoft.Json;
 
 namespace CST_350_Milestone.Services
 {
@@ -14,6 +15,11 @@ namespace CST_350_Milestone.Services
 			grid.Difficulty = difficulty;
 			grid.SetupLiveNeighbors();
 			grid.CalculateLiveNeighbors();
+		}
+
+		public GameService(string gameState)
+		{
+			grid = JsonConvert.DeserializeObject<GameGridModel>(gameState);
 		}
 
 		public GameCellModel update(int buttonNumber)
