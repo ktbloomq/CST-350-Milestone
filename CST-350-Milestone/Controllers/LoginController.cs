@@ -1,6 +1,10 @@
 ﻿using CST_350_Milestone.Models;
 using CST_350_Milestone.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using System.Security.Claims;
 
 namespace CST_350_Milestone.Controllers
 {
@@ -19,17 +23,36 @@ namespace CST_350_Milestone.Controllers
             return View();
         }
 
-        public void ProcessLogin(UserModel user)
+        public async Task<IActionResult> ProcessLogin(UserModel user)
         {
             if (Security.FindUserByNameAndPassword(user))
             {
-                Response.Redirect("/Game");
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
+                return RedirectToAction("Index", "Game");
             }
             else
             {
-				Response.Redirect("./");
+				return RedirectToAction("Index", "Login");
 			}
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home"); // Redirect after logout
+        }
+
         public IActionResult RegisterUser()
         {
             return View("RegisterUser");

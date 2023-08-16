@@ -1,10 +1,12 @@
 ﻿using CST_350_Milestone.Models;
 using CST_350_Milestone.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace CST_350_Milestone.Controllers
 {
+	[Authorize]
 	public class GameController : Controller
 	{
         public ISavesDataService Saves { get; set; }

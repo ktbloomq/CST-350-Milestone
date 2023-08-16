@@ -1,4 +1,5 @@
 using CST_350_Milestone.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,16 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ISavesDataService, SavesDAO>();
 builder.Services.AddScoped<IUsersDataService, SecurityDAO>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+    });
 
 var app = builder.Build();
 
@@ -23,6 +34,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
