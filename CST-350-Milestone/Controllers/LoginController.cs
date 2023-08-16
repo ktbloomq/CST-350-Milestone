@@ -6,6 +6,14 @@ namespace CST_350_Milestone.Controllers
 {
     public class LoginController : Controller
     {
+
+        public IUsersDataService Security { get; set; }
+
+        public LoginController(IUsersDataService securityService)
+        {
+            Security = securityService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -13,8 +21,7 @@ namespace CST_350_Milestone.Controllers
 
         public void ProcessLogin(UserModel user)
         {
-            SecurityDAO securityDAO = new SecurityDAO();
-            if (securityDAO.FindUserByNameAndPassword(user))
+            if (Security.FindUserByNameAndPassword(user))
             {
                 Response.Redirect("/Game");
             }
@@ -30,8 +37,7 @@ namespace CST_350_Milestone.Controllers
         [HttpPost]
         public IActionResult ProcessRegister(UserModel user) 
         {
-            SecurityDAO securityDAO = new SecurityDAO();
-            if (securityDAO.RegisterUser(user))
+            if (Security.RegisterUser(user))
             {
                 return View("RegisterSuccess", user);
             }

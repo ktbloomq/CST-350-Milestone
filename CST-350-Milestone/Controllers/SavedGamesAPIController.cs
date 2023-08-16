@@ -8,26 +8,30 @@ namespace CST_350_Milestone.Controllers
     [Route("api")]
     public class SavedGamesAPIController : ControllerBase
     {
+        public ISavesDataService Saves { get; set; }
 
-        private static SavesDAO saves = new SavesDAO();
+        public SavedGamesAPIController(ISavesDataService saves)
+        {
+            Saves = saves;
+        }
 
         [HttpGet("ShowSavedGames")]
         public ActionResult<IEnumerable<SavesDTO>> ShowSavedGames() 
         {
-            return saves.GetAll();
+            return Saves.GetAll();
         }
 
         [HttpGet("ShowSavedGames/{ID}")]
         public ActionResult<SavesDTO> ShowSavedGames(int ID)
         {
-            return saves.getOne(ID);
+            return Saves.GetOne(ID);
         }
 
         [HttpGet("DeleteOneGame/{ID}")]
         public ActionResult<IEnumerable<SavesDTO>> DeleteOneGame(int ID) 
         {
-            saves.DeleteOne(ID);
-            return saves.GetAll();
+            Saves.DeleteOne(ID);
+            return Saves.GetAll();
         }
     }
 }

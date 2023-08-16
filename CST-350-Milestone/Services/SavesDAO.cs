@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace CST_350_Milestone.Services
 {
-	public class SavesDAO
+	public class SavesDAO : ISavesDataService
 	{
 		string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=milestone-cst-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
@@ -36,7 +36,7 @@ namespace CST_350_Milestone.Services
 			return savedGames;
 		}
 
-		public SavesDTO getOne(int id)
+		public SavesDTO GetOne(int id)
 		{
 			Console.WriteLine("DAO: " + id);
 			SavesDTO gameState = null;
@@ -67,7 +67,7 @@ namespace CST_350_Milestone.Services
 			}
 			return gameState;
 		}
-		public bool save(int userId, string gameState)
+		public bool Save(int userId, string gameState)
 		{
 			bool success = false;
 			DateTime dateTime = DateTime.Now;

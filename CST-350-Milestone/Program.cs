@@ -1,7 +1,12 @@
+using CST_350_Milestone.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ISavesDataService, SavesDAO>();
+builder.Services.AddScoped<IUsersDataService, SecurityDAO>();
 
 var app = builder.Build();
 

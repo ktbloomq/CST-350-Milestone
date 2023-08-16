@@ -7,9 +7,15 @@ namespace CST_350_Milestone.Controllers
 {
 	public class GameController : Controller
 	{
-		//static GameGridModel grid = null;
-		static GameService game = null;
-		static SavesDAO savesDAO = new SavesDAO();
+        public ISavesDataService Saves { get; set; }
+
+		public GameController(ISavesDataService saves)
+		{
+			Saves = saves;
+		}
+
+        //static GameGridModel grid = null;
+        static GameService game = null;
 
 		public IActionResult Index()
 		{
@@ -78,7 +84,7 @@ namespace CST_350_Milestone.Controllers
 		{
 			string json = JsonConvert.SerializeObject(game.grid);
 			Console.WriteLine(json);
-			savesDAO.save(1, json);
+			Saves.Save(1, json);
 			return View("Index", game.grid);
 		}
 
@@ -87,22 +93,22 @@ namespace CST_350_Milestone.Controllers
 		public IActionResult Load(int save)
 		{
 			Console.WriteLine("loading save " + save);
-			SavesDTO gameState = savesDAO.getOne(save);
+			SavesDTO gameState = Saves.GetOne(save);
 			game = new GameService(gameState.SaveState);
 			return View("Index", game.grid);
 		}
 
 		public IActionResult LoadGames()
 		{
-			return View("LoadGames", savesDAO.GetAll());
+			return View("LoadGames", Saves.GetAll());
 		}
 
 		[HttpGet]
 		[Route("/game/delete/{save:int}")]
 		public IActionResult Delete(int save)
 		{
-			savesDAO.DeleteOne(save);
-			return View("LoadGames", savesDAO.GetAll());
+			Saves.DeleteOne(save);
+			return View("LoadGames", Saves.GetAll());
 		}
 	}
 }

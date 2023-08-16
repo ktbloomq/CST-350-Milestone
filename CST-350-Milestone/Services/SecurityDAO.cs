@@ -3,7 +3,7 @@ using CST_350_Milestone.Models;
 
 namespace CST_350_Milestone.Services
 {
-    public class SecurityDAO
+    public class SecurityDAO : IUsersDataService
     {
         string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=milestone-cst-350;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
