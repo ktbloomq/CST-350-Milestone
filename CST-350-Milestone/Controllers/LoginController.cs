@@ -28,7 +28,7 @@ namespace CST_350_Milestone.Controllers
         public async Task<IActionResult> ProcessLogin(UserModel user)
         {
             UserLogger.GetInstance().Info("Entering ProcessLogin Method.");
-            UserLogger.GetInstance().Info("Parameter: " + user.ToString());
+            UserLogger.GetInstance().Info("Username: " + user.Username);
             if (Security.FindUserByNameAndPassword(user))
             {
                 var claims = new List<Claim>
