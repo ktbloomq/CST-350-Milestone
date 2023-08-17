@@ -1,5 +1,6 @@
 ﻿using CST_350_Milestone.Models;
 using CST_350_Milestone.Services;
+using CST_350_Milestone.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -84,9 +85,11 @@ namespace CST_350_Milestone.Controllers
 
 		public IActionResult Save()
 		{
+			SavesLogger.GetInstance().Info("Saving Game...");
 			string json = JsonConvert.SerializeObject(game.grid);
 			Console.WriteLine(json);
 			Saves.Save(1, json);
+			SavesLogger.GetInstance().Info("Saved Game: " + json.ToString());
 			return View("Index", game.grid);
 		}
 
@@ -94,10 +97,21 @@ namespace CST_350_Milestone.Controllers
 		[Route("/Game/Load/{save:int}")]
 		public IActionResult Load(int save)
 		{
+			SavesLogger.GetInstance().Info("Attempting to load game...");
 			Console.WriteLine("loading save " + save);
 			SavesDTO gameState = Saves.GetOne(save);
-			game = new GameService(gameState.SaveState);
-			return View("Index", game.grid);
+			if (gameState != null)
+			{
+				SavesLogger.GetInstance().Info("Load successful.");
+                game = new GameService(gameState.SaveState);
+                return View("Index", game.grid);
+            }
+			else
+			{
+				SavesLogger.GetInstance().Info("Load unsuccessful.");
+				return View("LoadGames");
+			}
+			
 		}
 
 		public IActionResult LoadGames()

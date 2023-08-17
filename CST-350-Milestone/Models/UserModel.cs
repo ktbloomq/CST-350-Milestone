@@ -41,5 +41,10 @@ namespace CST_350_Milestone.Models
         [Required]
 		[MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
 		public string Password { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("Username: {0}, Email: {1}", Username, Email);
+        }
     }
 }
